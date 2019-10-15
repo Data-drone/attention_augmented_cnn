@@ -48,7 +48,7 @@ def rel_to_abs(x):
     return final_x
 
 def relative_logits_1d(q, rel_k, H, W, Nh, transpose_mask):
-    """Compute relative logits along one dimenion."""
+    """Compute relative logits along one dimension."""
     rel_logits = tf.einsum('bhxyd,md->bhxym', q, rel_k)
     # Collapse height and heads
     rel_logits = tf.reshape(
