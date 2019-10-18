@@ -11,3 +11,8 @@ def shape_list(x: torch.Tensor) -> list:
 def split_heads_2d(inputs: torch.Tensor, Nh: int) -> torch.Tensor:
     """Split channels into multiple heads"""
     """Reorder to B, d, H, W of Pytorch"""
+
+    B, d, H, W = shape_list(inputs)
+    ret_shape = [B, H, W, Nh, d // Nh]
+    split = torch.reshape(inputs, ret_shape)
+    return torch.transpose(split, [0, 3, 1, 2, 4])
