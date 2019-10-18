@@ -24,3 +24,17 @@ def test_shape_list():
 
     entry_shape_list([10, 60, 60, 3])
     entry_shape_list([60, 60, 3])
+
+def test_torch_shape_list():
+
+    torch_tensor = torch.rand([10, 60, 60, 3])
+
+    assert type(py_shape_list(torch_tensor)) == list
+
+def test_tf_shape_list():
+
+    tf_tensor = tf.random.normal(
+        shape = [10, 60, 60, 3]
+    )
+
+    assert type(tf_shape_list(tf_tensor)) == list
