@@ -15,4 +15,4 @@ def split_heads_2d(inputs: torch.Tensor, Nh: int) -> torch.Tensor:
     B, d, H, W = shape_list(inputs)
     ret_shape = [B, H, W, Nh, d // Nh]
     split = torch.reshape(inputs, ret_shape)
-    return torch.transpose(split, [0, 3, 1, 2, 4])
+    return split.permute(0, 3, 1, 2, 4)
