@@ -25,3 +25,8 @@ def combine_heads_2d(inputs: torch.Tensor) -> torch.Tensor:
     Nh, channels = shape_list(transposed)[-2:]
     ret_shape = shape_list(transposed)[:-2] + [Nh * channels]
     return torch.reshape(transposed, ret_shape) 
+
+def rel_to_abs(x):
+    """Converts tensor from relative to aboslute indexing."""
+    """why do we need this?"""
+    pass
