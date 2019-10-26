@@ -78,6 +78,6 @@ def self_attention_2d(inputs, dk, dv, Nh, relative=True):
 def augmented_conv2d(X, Fout, k, dk, dv, Nh, relative):
     conv_out = tf.layers.conv2d(inputs=X, filters=Fout - dv,
         kernel_size=k, padding='same')
-    attn_out = self.attention_2d(X, dk, dv, Nh, relative=relative)
+    attn_out = self_attention_2d(X, dk, dv, Nh, relative=relative)
     return tf.concat([conv_out, attn_out], axis=3)
 
