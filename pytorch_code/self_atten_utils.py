@@ -1,5 +1,7 @@
 
 # pytorch port of tf code
+# pytorch default ordering of data is different
+# we assume that we have B, d, H, W
 
 import torch
 
@@ -27,6 +29,13 @@ def combine_heads_2d(inputs: torch.Tensor) -> torch.Tensor:
     return torch.reshape(transposed, ret_shape) 
 
 def rel_to_abs(x):
-    """Converts tensor from relative to aboslute indexing."""
+    """Converts tensor from relative to absolute indexing."""
     """why do we need this?"""
-    pass
+    
+    B, Nh, L, _ = shape_list(x)
+    col_pad = torch.zeros([B, Nh, L, 1])
+
+    x = torch.cat((x, col_pad), dim=3)
+    
+
+
