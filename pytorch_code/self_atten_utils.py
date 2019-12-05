@@ -36,6 +36,12 @@ def rel_to_abs(x):
     col_pad = torch.zeros([B, Nh, L, 1])
 
     x = torch.cat((x, col_pad), dim=3)
-    
+    flat_x = torch.reshape(x, [B, Nh, L * 2 * L])
+    flat_pad = torch.zeros([B, Nh, L-1])
+    flat_x_pad = torch.concat([flat_x, flat_pad], axis = 2)
+
+    final_x = torch.reshape(flat_x_pad, [B, Nh, L+1, 2*L-1])
+    final_x = final_x[:, :, :L, L-1:]
+    return final_x
 
 
