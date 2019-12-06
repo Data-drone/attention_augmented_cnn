@@ -45,3 +45,20 @@ def rel_to_abs(x):
     return final_x
 
 
+def relative_logits_1d(q, rel_k, H, W, Nh, transpose_mask):
+    """Compute relative logits along one dimension."""
+
+    rel_logits = torch.einsum('bhxyd,md->bhxym', q, rel_k)
+    # Collapse height and heads
+    rel_logits = torch.reshape(
+        rel_logits, [-1, Nh * H, W, 2 * W-1]
+    )
+    rel_logits = rel_to_abs(rel_logits)
+    # Shape it and tile height times
+    rel_logits = torch.reshape(rel_logits, [-1, Nh, H, W, W])
+    rel_logits = torch.expand_dims(rel_logits, axis=3)
+    rel_logits = torch.tile(rel_logits, [1, 1, 1, H, 1, 1])
+    # Reshape for adding to the logits.
+    rel_logits = torch.transpose(rel_logits, transpose_mask)
+    rel_logits = torch.reshape(rel_logits, [-1, Nh, H*W, H*W])
+    return rel_logits

@@ -63,3 +63,5 @@ def relative_logits_1d(q, rel_k, H, W, Nh, transpose_mask):
     rel_logits = tf.transpose(rel_logits, transpose_mask)
     rel_logits = tf.reshape(rel_logits, [-1, Nh, H*W, H*W])
     return rel_logits
+
+    
