@@ -47,6 +47,7 @@ def rel_to_abs(x):
 
 def relative_logits_1d(q, rel_k, H, W, Nh, transpose_mask):
     """Compute relative logits along one dimension."""
+    """Need to document inputs to make sure we test right"""
 
     rel_logits = torch.einsum('bhxyd,md->bhxym', q, rel_k)
     # Collapse height and heads
